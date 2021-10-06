@@ -2,9 +2,9 @@ project:
   name: app
   description: Sample application
   longDescription: Sample application
-  website: https://github.com/aalmiray/app
+  website: https://acme.com/awesome-app
   authors:
-    - Andres Almiray
+    - Ixchel Ruiz
   license: Apache-2.0
   java:
     groupId: com.acme
@@ -15,19 +15,23 @@ project:
 release:
   github:
     overwrite: true
-    sign: true
     discussionCategoryName: Announcements
     changelog:
       formatted: ALWAYS
       format: '- {{commitShortHash}} {{commitTitle}}'
       contributors:
-        format: '{{contributorName}}{{#contributorUsernameAsLink}} ({{.}}){{/contributorUsernameAsLink}}'
+        format: '- {{contributorName}}{{#contributorUsernameAsLink}} ({{.}}){{/contributorUsernameAsLink}}'
       labelers:
+        - label: 'feature'
+          title: 'feat:'
         - label: 'issue'
-          title: 'Add'
+          title: 'fix:'
         - label: 'task'
-          title: 'Setup'
+          title: 'chore:'
       categories:
+        - title: '🚀 Features'
+          labels:
+            - 'feature'
         - title: '✅ Issues'
           labels:
             - 'issue'
@@ -35,20 +39,26 @@ release:
           labels:
             - 'task'
       replacers:
-        - search: '\[chore\] '
-        - search: '\[announce\]'
-          replace: '📣'
-
-signing:
-  active: always
-  armored: true
+        - search: 'feat: '
+        - search: 'fix: '
+        - search: 'chore: '
 
 packagers:
   brew:
     active: always
+    tap:
+      username: '1284934+ixchelruiz@users.noreply.github.com'
 
 distributions:
   app:
     artifacts:
       - path: target/distributions/{{distributionName}}/{{distributionName}}-{{projectVersion}}.zip
       - path: target/distributions/{{distributionName}}/{{distributionName}}-{{projectVersion}}.tar.gz
+
+upload:
+  artifactory:
+    ixchelruiz:
+      active: always
+      host: 'https://ixchelr.jfrog.io/artifactory'
+      repositories:
+        - path: 'binaries/{{projectName}}/{{projectVersion}}/{{artifactFile}}'
