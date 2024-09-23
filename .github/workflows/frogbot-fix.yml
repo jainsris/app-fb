@@ -10,7 +10,7 @@ permissions:
   pull-requests: write
 jobs:
   create-fix-pull-requests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu22
     steps:
       - uses: actions/checkout@v2
 
